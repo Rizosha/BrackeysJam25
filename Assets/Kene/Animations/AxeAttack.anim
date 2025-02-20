@@ -91,20 +91,6 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0
-    functionName: TurnOnHitbox
-    data: 
-    objectReferenceParameter: {fileID: 11500000, guid: 74466410ee4af414989f94cd4d40a660, type: 3}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0
-    functionName: TurnOffHitbox
-    data: 
-    objectReferenceParameter: {fileID: 11500000, guid: 74466410ee4af414989f94cd4d40a660, type: 3}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 0.16666667
     functionName: TurnOnHitbox
     data: 
@@ -113,9 +99,9 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.5833333
-    functionName: TurnOnHitbox
+    functionName: TurnOffHitbox
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 3597277389077115664, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
