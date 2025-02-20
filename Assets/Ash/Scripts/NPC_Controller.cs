@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NPC_Movement : MonoBehaviour
+public class NPC_Controller : MonoBehaviour
 {
     
    //[SerializeField] Transform target;
@@ -180,7 +180,14 @@ public class NPC_Movement : MonoBehaviour
             podiumDir.x = 1;
      
         }
-        
+
+        if (other.CompareTag("Weapon"))
+        {
+            spawner.AddLocation(currentTarget, currentListIndex);
+            
+            Destroy(gameObject);
+            spawner.npcCount--;
+        }
         
     }
 

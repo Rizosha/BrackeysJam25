@@ -14,6 +14,8 @@ public class CaseManager : MonoBehaviour
     public Case[] cases;
     public Color activeCaseColor; //here until possible
     public GameObject tranistionEffect;
+  
+   
 
     private void Awake()
     {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class Case : MonoBehaviour
     public Case topCase;
 
     [Header("Weapon")]
-    [SerializeField] private GameObject weaponInCase;
+    [SerializeField] public GameObject weaponInCase;
 
     [Header("Settings")]
     public float setCooltime;
@@ -21,8 +22,15 @@ public class Case : MonoBehaviour
 
     [SerializeField] private GameObject coolingClock;
     [SerializeField] private Image coolingCircle;
+    
+    public CircleCollider2D circleCollider2D;
 
     // Start is called before the first frame update
+    private void Start()
+    {
+        circleCollider2D = GetComponent<CircleCollider2D>();
+    }
+
     void Awake()
     {
         cooldownTime = setCooltime;
@@ -48,6 +56,7 @@ public class Case : MonoBehaviour
 
     public void Attack()
     {
+        
         weaponInCase.GetComponent<Animator>().SetTrigger(Animator.StringToHash("Attack"));
         canAttack = false;
         coolingClock.SetActive(true);
