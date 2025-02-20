@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: New Sprite Atlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 2b9a54108e571ac4c8f4500cb92b0693: -1017868532
+    - 2b9a54108e571ac4c8f4500cb92b0693: 1850981227
+    - 2b9a54108e571ac4c8f4500cb92b0693: -1932360502
+    - 2b9a54108e571ac4c8f4500cb92b0693: 1134972447
+    - 2b9a54108e571ac4c8f4500cb92b0693: -148626050
+    - 2b9a54108e571ac4c8f4500cb92b0693: 852611558
+    - 2b9a54108e571ac4c8f4500cb92b0693: -1564776147
+    - 2b9a54108e571ac4c8f4500cb92b0693: 1888830710
+    - 2b9a54108e571ac4c8f4500cb92b0693: 131384966
+    - 2b9a54108e571ac4c8f4500cb92b0693: 1228544575
+    - 2b9a54108e571ac4c8f4500cb92b0693: -969317912
+    - 2b9a54108e571ac4c8f4500cb92b0693: 875247325
+    - 2b9a54108e571ac4c8f4500cb92b0693: -1482299114
+    - 2b9a54108e571ac4c8f4500cb92b0693: -10530755
+    - 2b9a54108e571ac4c8f4500cb92b0693: 1832987739
+    - 2b9a54108e571ac4c8f4500cb92b0693: 2142458653
+    - 2b9a54108e571ac4c8f4500cb92b0693: 575318380
+    - 2b9a54108e571ac4c8f4500cb92b0693: 2147226645
+    - 2b9a54108e571ac4c8f4500cb92b0693: 1232188064
+    - 2b9a54108e571ac4c8f4500cb92b0693: -828468569
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: -1017868532, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: 1850981227, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: -1932360502, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: 1134972447, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: -148626050, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: 852611558, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: -1564776147, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: 1888830710, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: 131384966, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: 1228544575, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: -969317912, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: 875247325, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: -1482299114, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: -10530755, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: 1832987739, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: 2142458653, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: 575318380, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: 2147226645, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: 1232188064, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  - {fileID: -828468569, guid: 2b9a54108e571ac4c8f4500cb92b0693, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Museum Assets_3
+  - Museum Assets_2
+  - Museum Assets_1
+  - Museum Assets_0
+  - Museum Assets_7
+  - Museum Assets_6
+  - Museum Assets_5
+  - Museum Assets_4
+  - Museum Assets_9
+  - Museum Assets_8
+  - Museum Assets_16
+  - Museum Assets_17
+  - Museum Assets_14
+  - Museum Assets_15
+  - Museum Assets_12
+  - Museum Assets_13
+  - Museum Assets_10
+  - Museum Assets_11
+  - Museum Assets_18
+  - Museum Assets_19
+  m_RenderDataMap: {}
+  m_Tag: New Sprite Atlas
+  m_IsVariant: 0
