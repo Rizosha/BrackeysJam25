@@ -39,6 +39,9 @@ public class Spawner : MonoBehaviour
 
     private List<List<Transform>> allLocations = new List<List<Transform>>();
     public int npcCount = 0;
+    
+    public GameObject[] extraGameObjects;
+    private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
     private void Start()
     {
@@ -47,7 +50,22 @@ public class Spawner : MonoBehaviour
         allLocations.Add(location3);
         allLocations.Add(location4);
 
+        // Add extra game objects' SpriteRenderers to the list
+        foreach (GameObject obj in extraGameObjects)
+        {
+            SpriteRenderer objSpriteRenderer = obj.GetComponent<SpriteRenderer>();
+            if (objSpriteRenderer != null)
+            {
+                spriteRenderers.Add(objSpriteRenderer);
+            }
+        }
+        
         StartCoroutine(SpawnNPC());
+    }
+
+    private void Update()
+    {
+        SortLayers();
     }
 
     private IEnumerator SpawnNPC()
@@ -78,6 +96,18 @@ public class Spawner : MonoBehaviour
     public void RemoveLocation(Transform location, int listIndex)
     {
         allLocations[listIndex].Remove(location);
+    }
+    
+    void SortLayers()
+    {
+        float minY = -16f;
+        float maxY = 10f;
+
+        foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+        {
+            int sortingOrder = (int)Mathf.Lerp(20, 3, Mathf.InverseLerp(minY, maxY, spriteRenderer.transform.position.y));
+            spriteRenderer.sortingOrder = sortingOrder;
+        }
     }
     
     
