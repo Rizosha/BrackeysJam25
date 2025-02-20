@@ -10,7 +10,7 @@ public class NPC_Controller : MonoBehaviour
     Spawner spawner;
     public event Action OnDestroyEvent;
 
-    private List<List<Transform>> npcLocations = new List<List<Transform>>();
+   public List<List<Transform>> npcLocations;
     public HashSet<int> visitedLists = new HashSet<int>();
     private int currentListIndex;
     private Transform currentTarget;
@@ -25,6 +25,8 @@ public class NPC_Controller : MonoBehaviour
     private Vector2 direction;
     [SerializeField] private SpriteRenderer spriteRenderer;
     public GameObject[] extraGameObjects; 
+    
+    public bool canGrab = true;
 
     private void Start()
     {
@@ -47,6 +49,7 @@ public class NPC_Controller : MonoBehaviour
     {
         UpdateAnimator();
         SortLayers();
+        
     }
 
     private void MoveToPoint()
@@ -77,7 +80,8 @@ public class NPC_Controller : MonoBehaviour
         }
         else
         {
-            currentTarget = spawner.exitLocation;
+            int randomExitIndex = UnityEngine.Random.Range(0, spawner.exitLocation.Length);
+            currentTarget = spawner.exitLocation[randomExitIndex];
             agent.SetDestination(currentTarget.position);
         }
     }
@@ -109,7 +113,7 @@ public class NPC_Controller : MonoBehaviour
         spawnTimer = UnityEngine.Random.Range(2, 8);
         yield return new WaitForSeconds(spawnTimer);
 
-        if (UnityEngine.Random.value > 0.7f && UnityEngine.Random.value <= 1.0f)
+        if (UnityEngine.Random.value > 0.7f && UnityEngine.Random.value <= 1.0f && canGrab)
         {
             StartCoroutine(Grabbing());
         }
@@ -178,6 +182,12 @@ public class NPC_Controller : MonoBehaviour
             Destroy(gameObject);
             spawner.npcCount--;
         }
+        
+        
+        if (other.CompareTag("WaitPoint"))
+        {
+            canGrab = false;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -204,6 +214,11 @@ public class NPC_Controller : MonoBehaviour
         {
             podiumDir.y = 0;
             podiumDir.x = 0;
+        }
+
+        if (other.CompareTag("WaitPoint"))
+        {
+            canGrab = true;
         }
     }
 
@@ -246,8 +261,7 @@ public class NPC_Controller : MonoBehaviour
 
         int sortingOrder = (int)Mathf.Lerp(20, 3, Mathf.InverseLerp(minY, maxY, transform.position.y));
         spriteRenderer.sortingOrder = sortingOrder;
-
-        // Update sorting order for extra game objects
+        
         foreach (GameObject obj in extraGameObjects)
         {
             SpriteRenderer objSpriteRenderer = obj.GetComponent<SpriteRenderer>();

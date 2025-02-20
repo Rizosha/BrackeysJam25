@@ -3,45 +3,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.Serialization;
 
 public class Spawner : MonoBehaviour
 {
-    //todo
     
-    // ***Get prefab
-    // ***Get spawn point
-    // ***Instantiate prefab at spawn point
-    // ***Spawn at set/random intervals
-    // ***Have a list of locations npc can walk to
-    // ***Randomly select a location from the list
-    // ***Set the target location of npc to the selected location
-    // ***npc walks to the location
-    // ***When the npc reaches location, remove location from list so another npc cant walk to the same location
-    // ***Set a timer for the npc to wait at the location
-    // ***When timer is up, add location back to list
-    // ***When npc has visited all 4 locations, leave the scene
-    
-    //todo
-    // ***fix the npc walking to the same location
-    // ***some locations are not being added to the list because they have been removed already
-    
-    
-    [SerializeField] GameObject npcPrefab;
-    public Transform spawnPoint;
-    public float spawnInterval;
+    [Header("Settings")]
+    public float elapsedTime;
+    public float currentLevel = 1;
     public int npcMax = 10;
-    public Transform exitLocation;
-
+    public int npcCount = 0;
+    
+    [Header("Level 1 Settings")]
+    public float spawnMinL1;
+    public float spawnMaxL1;
+    public float level1Length;
+    
+    [Header("Level 2 Settings")]
+    public float spawnMinL2;
+    public float spawnMaxL2;
+    public float level2Length;
+    
+    [Header("Level 3 Settings")]
+    public float spawnMinL3;
+    public float spawnMaxL3;
+    public float level3Length;
+    
+    
+    
+    
+    [Header("References")]
+    [SerializeField] GameObject npcPrefab;
+    public Transform[] spawnPoints;
+    public Transform[] exitLocation;
+    
+    private float spawnInterval;
     public List<Transform> location1 = new List<Transform>();
     public List<Transform> location2 = new List<Transform>();
     public List<Transform> location3 = new List<Transform>();
     public List<Transform> location4 = new List<Transform>();
+    public List<Transform> location5 = new List<Transform>();
+    public List<Transform> location6 = new List<Transform>();
+    public List<Transform> location7 = new List<Transform>();
+    public List<Transform> location8 = new List<Transform>();
 
     private List<List<Transform>> allLocations = new List<List<Transform>>();
-    public int npcCount = 0;
+   
     
     public GameObject[] extraGameObjects;
     private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
+    
+   
 
     private void Start()
     {
@@ -49,8 +61,12 @@ public class Spawner : MonoBehaviour
         allLocations.Add(location2);
         allLocations.Add(location3);
         allLocations.Add(location4);
+        allLocations.Add(location5);
+        allLocations.Add(location6);
+        allLocations.Add(location7);
+        allLocations.Add(location8);
 
-        // Add extra game objects' SpriteRenderers to the list
+        
         foreach (GameObject obj in extraGameObjects)
         {
             SpriteRenderer objSpriteRenderer = obj.GetComponent<SpriteRenderer>();
@@ -66,23 +82,43 @@ public class Spawner : MonoBehaviour
     private void Update()
     {
         SortLayers();
+        elapsedTime = Time.time;
     }
 
     private IEnumerator SpawnNPC()
     {
-        while (npcCount < npcMax)
+        while (true) // Loop indefinitely
         {
-            Instantiate(npcPrefab, spawnPoint.position, Quaternion.identity);
-            npcCount++;
-            spawnInterval = UnityEngine.Random.Range(2f, 6f);
+            if (npcCount < npcMax)
+            {
+                if (elapsedTime < level1Length)
+                {
+                    spawnInterval = UnityEngine.Random.Range(spawnMinL1, spawnMaxL1);
+                    currentLevel = 1;
+                }
+                else if (elapsedTime < level1Length + level2Length)
+                {
+                    spawnInterval = UnityEngine.Random.Range(spawnMinL2, spawnMaxL2);
+                    currentLevel = 2;
+                }
+                else if (elapsedTime < level1Length + level2Length + level3Length)
+                {
+                    spawnInterval = UnityEngine.Random.Range(spawnMinL3, spawnMaxL3);
+                    currentLevel = 3;
+                }
+                else
+                {
+                    currentLevel = 4;
+                }
+
+                int randomSpawnIndex = UnityEngine.Random.Range(0, spawnPoints.Length);
+                Instantiate(npcPrefab, spawnPoints[randomSpawnIndex].position, Quaternion.identity);
+                npcCount++;
+            }
+
             yield return new WaitForSeconds(spawnInterval);
         }
-        
-        spawnInterval = UnityEngine.Random.Range(2f, 3f);
-        yield return new WaitForSeconds(spawnInterval);
-        StartCoroutine(SpawnNPC());
     }
-
     public List<List<Transform>> GetAllLocations()
     {
         return allLocations;

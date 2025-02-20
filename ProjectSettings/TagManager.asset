@@ -10,6 +10,7 @@ TagManager:
   - Left
   - Right
   - Weapon
+  - WaitPoint
   layers:
   - Default
   - TransparentFX
