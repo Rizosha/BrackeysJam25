@@ -67789,10 +67789,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 350565609727315093, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 228fcd84f63da634387ad62bd6dd38d7, type: 3}
+    - target: {fileID: 364824257226148500, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 228fcd84f63da634387ad62bd6dd38d7, type: 3}
+    - target: {fileID: 721683952217463809, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1149553960800345593, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 483404317}
+    - target: {fileID: 1552028768594767537, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2054962350272980476, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
       propertyPath: coolingClock
       value: 
@@ -67809,10 +67825,54 @@ PrefabInstance:
       propertyPath: m_Name
       value: Artifact Weapon Cases
       objectReference: {fileID: 0}
+    - target: {fileID: 4660934384861313606, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 4884742207152092182, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 228fcd84f63da634387ad62bd6dd38d7, type: 3}
+    - target: {fileID: 5221360999172272340, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5492120197038146494, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.85
+      objectReference: {fileID: 0}
     - target: {fileID: 5739032128382878184, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 483404317}
+    - target: {fileID: 6055210359596825713, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 228fcd84f63da634387ad62bd6dd38d7, type: 3}
+    - target: {fileID: 6443043168532373711, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 228fcd84f63da634387ad62bd6dd38d7, type: 3}
+    - target: {fileID: 6644297946631036017, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 228fcd84f63da634387ad62bd6dd38d7, type: 3}
+    - target: {fileID: 6842038142361103034, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 228fcd84f63da634387ad62bd6dd38d7, type: 3}
+    - target: {fileID: 6971318319944855073, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 7296477082227643494, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854809846011678684, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 228fcd84f63da634387ad62bd6dd38d7, type: 3}
     - target: {fileID: 8162298835031774784, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
       propertyPath: tranistionEffect
       value: 
@@ -67855,6 +67915,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8688234999398183653, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8939719854368174782, guid: c6bd4d1854f02b1429d69df1f087140e, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
