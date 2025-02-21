@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 /// <summary>
 /// WIP until art assets are in!
@@ -12,11 +13,8 @@ public class CaseManager : MonoBehaviour
     public Case ActiveCase { get { return _activeCase; } set { _activeCase = value; } }
 
     public Case[] cases;
-    public Color activeCaseColor; //here until possible
     public GameObject tranistionEffect;
-  
-   
-
+ 
     private void Awake()
     {
         _activeCase = cases[0];
@@ -70,13 +68,13 @@ public class CaseManager : MonoBehaviour
             DeinitializeCase(cases[i]);
         }
 
-        currentCase.GetComponent<SpriteRenderer>().color = activeCaseColor;
+        currentCase.spotLight.enabled = true;
         ActiveCase = currentCase;
     }
 
     private void DeinitializeCase(Case currentCase) 
     {
-        currentCase.GetComponent<SpriteRenderer>().color = Color.white;
+        currentCase.spotLight.enabled = false;
     }
     private void InputCaseSwitch(Case caseSwitch)
     {

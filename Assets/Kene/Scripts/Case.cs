@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class Case : MonoBehaviour
@@ -24,6 +25,7 @@ public class Case : MonoBehaviour
     [SerializeField] private Image coolingCircle;
     
     public CircleCollider2D circleCollider2D;
+    public Light2D spotLight;
 
     // Start is called before the first frame update
     private void Start()
