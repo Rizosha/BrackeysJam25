@@ -26,11 +26,18 @@ public class Case : MonoBehaviour
     
     public CircleCollider2D circleCollider2D;
     public Light2D spotLight;
+    
+    public int health = 100;
+    public Image healthBar;
+    public static event Action<Transform> OnCaseInactive;
+
+    
 
     // Start is called before the first frame update
     private void Start()
     {
         circleCollider2D = GetComponent<CircleCollider2D>();
+        
     }
 
     void Awake()
@@ -63,4 +70,18 @@ public class Case : MonoBehaviour
         canAttack = false;
         coolingClock.SetActive(true);
     }
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        healthBar.fillAmount = health / 100f;
+
+        if (health <= 0)
+        {
+            OnCaseInactive?.Invoke(transform);
+            Spawner spawner = GameObject.FindWithTag("GameController").GetComponent<Spawner>();
+            spawner.RemoveLocation(transform);
+            gameObject.SetActive(false);
+        }
+    }
+
 }

@@ -11,6 +11,8 @@ TagManager:
   - Right
   - Weapon
   - WaitPoint
+  - Case
+  - Score
   layers:
   - Default
   - TransparentFX

@@ -8,24 +8,20 @@ public class NPC_Controller : MonoBehaviour
 {
     NavMeshAgent agent;
     Spawner spawner;
-    public event Action OnDestroyEvent;
 
-   public List<List<Transform>> npcLocations;
-    public HashSet<int> visitedLists = new HashSet<int>();
-    private int currentListIndex;
+    private List<Transform> npcLocations = new List<Transform>();
     private Transform currentTarget;
     private int spawnTimer;
 
     public bool grabbing = false;
-
     public GameObject grabMarker;
 
     Animator animator;
     public Vector2 podiumDir;
     private Vector2 direction;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    public GameObject[] extraGameObjects; 
-    
+    public GameObject[] extraGameObjects;
+
     public bool canGrab = true;
 
     private void Start()
@@ -35,7 +31,7 @@ public class NPC_Controller : MonoBehaviour
         agent.updateUpAxis = false;
 
         spawner = GameObject.FindWithTag("GameController").GetComponent<Spawner>();
-        npcLocations = new List<List<Transform>>(spawner.GetAllLocations());
+        npcLocations = new List<Transform>(spawner.GetMainLocations()); 
 
         grabMarker = gameObject.transform.Find("Grab").gameObject;
 
@@ -49,40 +45,10 @@ public class NPC_Controller : MonoBehaviour
     {
         UpdateAnimator();
         SortLayers();
-        
-    }
 
-    private void MoveToPoint()
-    {
-        if (visitedLists.Count < 4)
+        if (currentTarget != null && !currentTarget.gameObject.activeInHierarchy)
         {
-            do
-            {
-                currentListIndex = UnityEngine.Random.Range(0, npcLocations.Count);
-            } while (visitedLists.Contains(currentListIndex));
-
-            if (npcLocations[currentListIndex].Count > 0)
-            {
-                int randomLocationIndex = UnityEngine.Random.Range(0, npcLocations[currentListIndex].Count);
-                currentTarget = npcLocations[currentListIndex][randomLocationIndex];
-
-                agent.SetDestination(currentTarget.position);
-
-                npcLocations[currentListIndex].Remove(currentTarget);
-                spawner.RemoveLocation(currentTarget, currentListIndex);
-
-                StartCoroutine(CheckIfReachedDestination());
-            }
-            else
-            {
-                StartCoroutine(WaitAndRetry());
-            }
-        }
-        else
-        {
-            int randomExitIndex = UnityEngine.Random.Range(0, spawner.exitLocation.Length);
-            currentTarget = spawner.exitLocation[randomExitIndex];
-            agent.SetDestination(currentTarget.position);
+            HandleCaseInactive(currentTarget);
         }
     }
 
@@ -90,56 +56,6 @@ public class NPC_Controller : MonoBehaviour
     {
         float waitTime = UnityEngine.Random.Range(2f, 8f);
         yield return new WaitForSeconds(waitTime);
-        MoveToPoint();
-    }
-
-    private IEnumerator CheckIfReachedDestination()
-    {
-        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
-        {
-            yield return null;
-        }
-
-        visitedLists.Add(currentListIndex);
-        StartCoroutine(WaitAtLocation());
-    }
-
-    private IEnumerator WaitAtLocation()
-    {
-        animator.SetBool("IsWalking", false);
-        animator.SetFloat("PodHor", podiumDir.x);
-        animator.SetFloat("PodVer", podiumDir.y);
-
-        spawnTimer = UnityEngine.Random.Range(2, 8);
-        yield return new WaitForSeconds(spawnTimer);
-
-        if (UnityEngine.Random.value > 0.7f && UnityEngine.Random.value <= 1.0f && canGrab)
-        {
-            StartCoroutine(Grabbing());
-        }
-        else
-        {
-            animator.SetBool("IsWalking", true);
-            spawner.AddLocation(currentTarget, currentListIndex);
-            MoveToPoint();
-        }
-    }
-
-    private IEnumerator Grabbing()
-    {
-        grabbing = true;
-        grabMarker.SetActive(true);
-        agent.isStopped = true;
-        yield return new WaitForSeconds(3f);
-
-        //damage here
-
-        grabbing = false;
-        grabMarker.SetActive(false);
-        agent.isStopped = false;
-        animator.SetBool("IsWalking", true);
-
-        spawner.AddLocation(currentTarget, currentListIndex);
         MoveToPoint();
     }
 
@@ -177,13 +93,11 @@ public class NPC_Controller : MonoBehaviour
 
         if (other.CompareTag("Weapon"))
         {
-            spawner.AddLocation(currentTarget, currentListIndex);
-
             Destroy(gameObject);
             spawner.npcCount--;
+            GameObject.FindWithTag("GameController").GetComponent<Score>().AddScore(100);
         }
-        
-        
+
         if (other.CompareTag("WaitPoint"))
         {
             canGrab = false;
@@ -192,30 +106,6 @@ public class NPC_Controller : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Up"))
-        {
-            podiumDir.y = 0;
-            podiumDir.x = 0;
-        }
-
-        if (other.CompareTag("Down"))
-        {
-            podiumDir.y = 0;
-            podiumDir.x = 0;
-        }
-
-        if (other.CompareTag("Left"))
-        {
-            podiumDir.y = 0;
-            podiumDir.x = 0;
-        }
-
-        if (other.CompareTag("Right"))
-        {
-            podiumDir.y = 0;
-            podiumDir.x = 0;
-        }
-
         if (other.CompareTag("WaitPoint"))
         {
             canGrab = true;
@@ -261,7 +151,7 @@ public class NPC_Controller : MonoBehaviour
 
         int sortingOrder = (int)Mathf.Lerp(20, 3, Mathf.InverseLerp(minY, maxY, transform.position.y));
         spriteRenderer.sortingOrder = sortingOrder;
-        
+
         foreach (GameObject obj in extraGameObjects)
         {
             SpriteRenderer objSpriteRenderer = obj.GetComponent<SpriteRenderer>();
@@ -271,9 +161,152 @@ public class NPC_Controller : MonoBehaviour
             }
         }
     }
-    
-    private void OnDestroy()
+
+    private Case FindClosestCase()
     {
-        OnDestroyEvent?.Invoke();
+        Case[] cases = FindObjectsOfType<Case>();
+        Case closestCase = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (Case currentCase in cases)
+        {
+            float distance = Vector3.Distance(transform.position, currentCase.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestCase = currentCase;
+            }
+        }
+
+        return closestCase;
+    }
+
+    private IEnumerator Grabbing()
+    {
+        grabbing = true;
+        grabMarker.SetActive(true);
+        agent.isStopped = true;
+        yield return new WaitForSeconds(3f);
+
+        Case closestCase = FindClosestCase();
+        if (closestCase != null)
+        {
+            closestCase.TakeDamage(20);
+        }
+
+        grabbing = false;
+        if (grabMarker != null)
+        {
+            grabMarker.SetActive(false);
+        }
+
+        agent.isStopped = false;
+        animator.SetBool("IsWalking", true);
+
+        MoveToPoint();
+    }
+
+    private Vector3 GetRandomNavMeshLocation(Vector3 center, float radius)
+    {
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+        randomDirection += center;
+        NavMeshHit hit;
+        NavMesh.SamplePosition(randomDirection, out hit, radius, 1);
+        return hit.position;
+    }
+
+    private void MoveToPoint()
+    {
+        Transform closestLocation = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (var location in npcLocations)
+        {
+            float distance = Vector3.Distance(transform.position, location.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestLocation = location;
+            }
+        }
+
+        if (closestLocation != null)
+        {
+            currentTarget = closestLocation;
+            npcLocations.Remove(closestLocation);
+            Vector3 randomNavMeshLocation = GetRandomNavMeshLocation(currentTarget.position, 6f);
+            agent.SetDestination(randomNavMeshLocation);
+
+            StartCoroutine(CheckIfReachedRandomLocation(randomNavMeshLocation));
+        }
+        else
+        {
+            if (spawner.exitLocation != null && spawner.exitLocation.Length > 0)
+            {
+                int randomExitIndex = UnityEngine.Random.Range(0, spawner.exitLocation.Length);
+                currentTarget = spawner.exitLocation[randomExitIndex];
+                agent.SetDestination(currentTarget.position);
+            }
+        }
+    }
+
+    private IEnumerator WaitAtLocation()
+    {
+        animator.SetBool("IsWalking", false);
+        animator.SetFloat("PodHor", podiumDir.x);
+        animator.SetFloat("PodVer", podiumDir.y);
+
+        spawnTimer = UnityEngine.Random.Range(2, 8);
+        yield return new WaitForSeconds(spawnTimer);
+
+        if (UnityEngine.Random.value > 0f && UnityEngine.Random.value <= 1.0f && canGrab)
+        {
+            StartCoroutine(Grabbing());
+        }
+        else
+        {
+            animator.SetBool("IsWalking", true);
+            MoveToPoint();
+        }
+    }
+
+    private IEnumerator CheckIfReachedRandomLocation(Vector3 randomLocation)
+    {
+        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+        {
+            yield return null;
+        }
+
+        StartCoroutine(WaitAtLocation());
+    }
+
+    private void OnEnable()
+    {
+        Case.OnCaseInactive += HandleCaseInactive;
+    }
+
+    private void OnDisable()
+    {
+        Case.OnCaseInactive -= HandleCaseInactive;
+    }
+
+    private void HandleCaseInactive(Transform inactiveCase)
+    {
+        if (npcLocations.Contains(inactiveCase))
+        {
+            npcLocations.Remove(inactiveCase);
+        }
+
+        if (currentTarget == inactiveCase)
+        {
+            if (grabbing)
+            {
+                StopCoroutine("Grabbing");
+                grabbing = false;
+                grabMarker.SetActive(false);
+                agent.isStopped = false;
+            }
+            MoveToPoint();
+        }
     }
 }
