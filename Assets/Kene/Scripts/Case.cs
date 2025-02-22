@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class Case : MonoBehaviour
 {
-
     public Case leftCase;
     public Case rightCase;
     public Case bottomCase;
@@ -23,21 +22,18 @@ public class Case : MonoBehaviour
 
     [SerializeField] private GameObject coolingClock;
     [SerializeField] private Image coolingCircle;
-    
+
     public CircleCollider2D circleCollider2D;
     public Light2D spotLight;
-    
+
     public int health = 100;
     public Image healthBar;
     public static event Action<Transform> OnCaseInactive;
 
-    
-
-    // Start is called before the first frame update
     private void Start()
     {
         circleCollider2D = GetComponent<CircleCollider2D>();
-        
+       
     }
 
     void Awake()
@@ -45,7 +41,6 @@ public class Case : MonoBehaviour
         cooldownTime = setCooltime;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (cooldownTime <= 0)
@@ -56,8 +51,8 @@ public class Case : MonoBehaviour
             coolingCircle.fillAmount = cooldownTime / setCooltime;
         }
 
-        if (cooldownTime != 0 && !canAttack) 
-        { 
+        if (cooldownTime != 0 && !canAttack)
+        {
             cooldownTime -= Time.deltaTime;
             coolingCircle.fillAmount = cooldownTime / setCooltime;
         }
@@ -65,23 +60,54 @@ public class Case : MonoBehaviour
 
     public void Attack()
     {
-        
         weaponInCase.GetComponent<Animator>().SetTrigger(Animator.StringToHash("Attack"));
         canAttack = false;
         coolingClock.SetActive(true);
     }
+
     public void TakeDamage(int damage)
     {
         health -= damage;
-        healthBar.fillAmount = health / 100f;
+        if (healthBar != null)
+        {
+            healthBar.fillAmount = health / 100f;
+        }
 
         if (health <= 0)
         {
             OnCaseInactive?.Invoke(transform);
-            Spawner spawner = GameObject.FindWithTag("GameController").GetComponent<Spawner>();
-            spawner.RemoveLocation(transform);
+            Spawner spawner = GameObject.FindWithTag("GameController")?.GetComponent<Spawner>();
+            if (spawner != null)
+            {
+                spawner.RemoveLocation(transform);
+            }
+            
+            spawner.towers--;
+            if (spawner.towers == 0)
+            {
+                spawner.GameOver();
+            }
             gameObject.SetActive(false);
+
+          
+        }
+
+        if (gameObject.activeInHierarchy && healthBar != null && healthBar.enabled)
+        {
+            StartCoroutine(FlashHealthBar());
         }
     }
-
+    private IEnumerator FlashHealthBar()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (healthBar != null)
+            {
+                healthBar.enabled = false;
+                yield return new WaitForSeconds(0.2f);
+                healthBar.enabled = true;
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
+    }
 }

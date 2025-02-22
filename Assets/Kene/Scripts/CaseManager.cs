@@ -4,17 +4,19 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-/// <summary>
-/// WIP until art assets are in!
-/// </summary>
 public class CaseManager : MonoBehaviour
 {
     [SerializeField] private Case _activeCase;
-    public Case ActiveCase { get { return _activeCase; } set { _activeCase = value; } }
+
+    public Case ActiveCase
+    {
+        get { return _activeCase; }
+        set { _activeCase = value; }
+    }
 
     public Case[] cases;
     public GameObject tranistionEffect;
- 
+
     private void Awake()
     {
         _activeCase = cases[0];
@@ -38,7 +40,6 @@ public class CaseManager : MonoBehaviour
 
             StartCoroutine(InitializeCase(openCases[Random.Range(0, openCases.Count)]));
         }
-
     }
 
     private IEnumerator InitializeCase(Case currentCase)
@@ -49,13 +50,12 @@ public class CaseManager : MonoBehaviour
         float time = 0;
         float duration = 0.1f;
         tranistionEffect.SetActive(true);
-        while (time < duration) 
+        while (time < duration)
         {
-            tranistionEffect.transform.position = Vector3.Lerp(tranistionEffect.transform.position, 
+            tranistionEffect.transform.position = Vector3.Lerp(tranistionEffect.transform.position,
                 currentCase.transform.position, time / duration);
             time += Time.deltaTime;
             yield return null;
-        
         }
 
         tranistionEffect.SetActive(false);
@@ -72,13 +72,14 @@ public class CaseManager : MonoBehaviour
         ActiveCase = currentCase;
     }
 
-    private void DeinitializeCase(Case currentCase) 
+    private void DeinitializeCase(Case currentCase)
     {
         currentCase.spotLight.enabled = false;
     }
+
     private void InputCaseSwitch(Case caseSwitch)
     {
-        if (Input.GetKeyDown(KeyCode.W)) 
+        if (Input.GetKeyDown(KeyCode.W))
         {
             if (caseSwitch.topCase == null)
                 return;
@@ -88,9 +89,9 @@ public class CaseManager : MonoBehaviour
 
             StartCoroutine(InitializeCase(caseSwitch.topCase));
             return;
-        } 
-        
-        if (Input.GetKeyDown(KeyCode.A)) 
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
         {
             if (caseSwitch.leftCase == null)
                 return;
@@ -101,8 +102,8 @@ public class CaseManager : MonoBehaviour
             StartCoroutine(InitializeCase(caseSwitch.leftCase));
             return;
         }
-        
-        if (Input.GetKeyDown(KeyCode.S)) 
+
+        if (Input.GetKeyDown(KeyCode.S))
         {
             if (caseSwitch.bottomCase == null)
                 return;
@@ -113,8 +114,8 @@ public class CaseManager : MonoBehaviour
             StartCoroutine(InitializeCase(caseSwitch.bottomCase));
             return;
         }
-        
-        if (Input.GetKeyDown(KeyCode.D)) 
+
+        if (Input.GetKeyDown(KeyCode.D))
         {
             if (caseSwitch.rightCase == null)
                 return;
@@ -125,6 +126,6 @@ public class CaseManager : MonoBehaviour
             StartCoroutine(InitializeCase(caseSwitch.rightCase));
             return;
         }
-
     }
+    
 }

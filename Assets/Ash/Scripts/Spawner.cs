@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -9,6 +10,7 @@ public class Spawner : MonoBehaviour
     public float currentLevel = 1;
     public int npcMax = 10;
     public int npcCount = 0;
+    public int towers = 4;
 
     [Header("Level 1 Settings")] public float spawnMinL1;
     public float spawnMaxL1;
@@ -23,7 +25,7 @@ public class Spawner : MonoBehaviour
     public float level3Length;
 
     [Header("References")] [SerializeField]
-    GameObject npcPrefab;
+    GameObject[] npcPrefabs;
 
     public Transform[] spawnPoints;
     public Transform[] exitLocation;
@@ -34,6 +36,11 @@ public class Spawner : MonoBehaviour
     public GameObject[] extraGameObjects;
     private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
+    public GameObject scoreUi;
+    public GameObject gameOverUi;
+    public TextMeshProUGUI scoreText;
+    Score score;
+    
     private void Start()
     {
         foreach (GameObject obj in extraGameObjects)
@@ -46,12 +53,14 @@ public class Spawner : MonoBehaviour
         }
 
         StartCoroutine(SpawnNPC());
+        score = FindObjectOfType<Score>();
     }
 
     private void Update()
     {
         SortLayers();
         elapsedTime = Time.time;
+        
     }
 
     private IEnumerator SpawnNPC()
@@ -81,7 +90,8 @@ public class Spawner : MonoBehaviour
                 }
 
                 int randomSpawnIndex = UnityEngine.Random.Range(0, spawnPoints.Length);
-                Instantiate(npcPrefab, spawnPoints[randomSpawnIndex].position, Quaternion.identity);
+                int randomNpcIndex = UnityEngine.Random.Range(0, npcPrefabs.Length); // Randomly select an NPC prefab
+                Instantiate(npcPrefabs[randomNpcIndex], spawnPoints[randomSpawnIndex].position, Quaternion.identity);
                 npcCount++;
             }
 
@@ -115,5 +125,27 @@ public class Spawner : MonoBehaviour
         {
             mainLocations.Remove(location);
         }
+    }
+    
+    public void GameOver()
+    {
+        Debug.Log("Game Over");
+        Time.timeScale = 0;
+        scoreText.text = score.score.ToString();
+        scoreUi.SetActive(false);
+        gameOverUi.SetActive(true);
+    }
+    
+    public void Restart()
+    {
+        Time.timeScale = 1;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+    
+ 
+    public void Quit()
+    {
+        //add main menu scene here
+        Application.Quit();
     }
 }

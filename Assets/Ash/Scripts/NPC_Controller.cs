@@ -23,6 +23,7 @@ public class NPC_Controller : MonoBehaviour
     public GameObject[] extraGameObjects;
 
     public bool canGrab = true;
+    public bool isDead = false;
 
     private void Start()
     {
@@ -50,6 +51,9 @@ public class NPC_Controller : MonoBehaviour
         {
             HandleCaseInactive(currentTarget);
         }
+        animator.SetBool("isGrabbing", grabbing);
+        animator.SetBool("isDead", isDead);
+       
     }
 
     private IEnumerator WaitAndRetry()
@@ -93,7 +97,9 @@ public class NPC_Controller : MonoBehaviour
 
         if (other.CompareTag("Weapon"))
         {
-            Destroy(gameObject);
+            isDead = true;
+            StartCoroutine(Die());
+           
             spawner.npcCount--;
             GameObject.FindWithTag("GameController").GetComponent<Score>().AddScore(100);
         }
@@ -122,22 +128,22 @@ public class NPC_Controller : MonoBehaviour
         if (angle > -45 && angle <= 45)
         {
             direction = Vector2.right;
-            spriteRenderer.flipX = false;
+           // spriteRenderer.flipX = false;
         }
         else if (angle > 45 && angle <= 135)
         {
             direction = Vector2.up;
-            spriteRenderer.flipX = false;
+            //spriteRenderer.flipX = false;
         }
         else if (angle > 135 || angle <= -135)
         {
             direction = Vector2.left;
-            spriteRenderer.flipX = true;
+           // spriteRenderer.flipX = true;
         }
         else
         {
             direction = Vector2.down;
-            spriteRenderer.flipX = false;
+          //  spriteRenderer.flipX = false;
         }
 
         animator.SetFloat("Horizontal", direction.x);
@@ -184,9 +190,9 @@ public class NPC_Controller : MonoBehaviour
     private IEnumerator Grabbing()
     {
         grabbing = true;
-        grabMarker.SetActive(true);
+       // grabMarker.SetActive(true);
         agent.isStopped = true;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(.6f);
 
         Case closestCase = FindClosestCase();
         if (closestCase != null)
@@ -288,6 +294,13 @@ public class NPC_Controller : MonoBehaviour
     private void OnDisable()
     {
         Case.OnCaseInactive -= HandleCaseInactive;
+    }
+
+    private IEnumerator Die()
+    {
+        agent.isStopped = true;
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject);
     }
 
     private void HandleCaseInactive(Transform inactiveCase)
