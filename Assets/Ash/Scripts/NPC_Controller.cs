@@ -298,6 +298,8 @@ public class NPC_Controller : MonoBehaviour
 
     private IEnumerator Die()
     {
+        if (CaseManager.Instance.bloodEffect != null) 
+            CaseManager.Instance.CreateBloodSpatter(transform);
         agent.isStopped = true;
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);

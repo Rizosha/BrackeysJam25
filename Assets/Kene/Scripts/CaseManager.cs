@@ -81,7 +81,7 @@ public class CaseManager : MonoBehaviour
     public void CreateBloodSpatter(Transform transform)
     {
         GameObject bloodVFX = Instantiate(bloodEffect);
-        bloodEffect.transform.position = transform.position;
+        bloodVFX.transform.position = transform.position;
     }
     private void DeinitializeCase(Case currentCase) 
     {
