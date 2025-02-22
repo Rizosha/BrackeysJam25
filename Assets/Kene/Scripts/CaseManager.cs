@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,8 @@ using UnityEngine.Rendering.Universal;
 
 public class CaseManager : MonoBehaviour
 {
+    public static CaseManager Instance;
+
     [SerializeField] private Case _activeCase;
 
     public Case ActiveCase
@@ -16,7 +19,10 @@ public class CaseManager : MonoBehaviour
 
     public Case[] cases;
     public GameObject tranistionEffect;
+    public GameObject bloodEffect;
 
+    [NonSerialized] public bool hasAttacked;
+ 
     private void Awake()
     {
         _activeCase = cases[0];
@@ -24,6 +30,7 @@ public class CaseManager : MonoBehaviour
 
     private void Start()
     {
+        Instance = this;
         StartCoroutine(InitializeCase(_activeCase));
     }
 
@@ -33,16 +40,15 @@ public class CaseManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            print(_activeCase);
-            _activeCase.Attack();
-
-            List<Case> openCases = cases.Where(x => x.canAttack).ToList();
-
-            StartCoroutine(InitializeCase(openCases[Random.Range(0, openCases.Count)]));
+            if (!hasAttacked)
+            {
+                print(_activeCase);
+                StartCoroutine(_activeCase.Attack());
+                hasAttacked = true;
+            }
         }
     }
-
-    private IEnumerator InitializeCase(Case currentCase)
+    public IEnumerator InitializeCase(Case currentCase)
     {
         if (currentCase == null || !currentCase.canAttack)
             yield return null;
@@ -72,7 +78,12 @@ public class CaseManager : MonoBehaviour
         ActiveCase = currentCase;
     }
 
-    private void DeinitializeCase(Case currentCase)
+    public void CreateBloodSpatter(Transform transform)
+    {
+        GameObject bloodVFX = Instantiate(bloodEffect);
+        bloodEffect.transform.position = transform.position;
+    }
+    private void DeinitializeCase(Case currentCase) 
     {
         currentCase.spotLight.enabled = false;
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
@@ -56,13 +57,25 @@ public class Case : MonoBehaviour
             cooldownTime -= Time.deltaTime;
             coolingCircle.fillAmount = cooldownTime / setCooltime;
         }
+
+        circleCollider2D.enabled = GetComponentInParent<CaseManager>().hasAttacked;
     }
 
-    public void Attack()
+    public IEnumerator Attack()
     {
         weaponInCase.GetComponent<Animator>().SetTrigger(Animator.StringToHash("Attack"));
+
+        yield return new WaitForSeconds(0.667f); //animation time
+
         canAttack = false;
         coolingClock.SetActive(true);
+
+        List<Case> openCases = GetComponentInParent<CaseManager>().cases.Where(x => x.canAttack).ToList();
+
+        if (openCases.Count > 0)
+            StartCoroutine(GetComponentInParent<CaseManager>().InitializeCase(openCases[UnityEngine.Random.Range(0, openCases.Count)]));
+
+        GetComponentInParent<CaseManager>().hasAttacked = false;
     }
 
     public void TakeDamage(int damage)
