@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
+    public string menuMusicToPlay;
+
+    private void Start()
+    {
+        PlayMenuMusic();
+    }
+
+    public void PlayMenuMusic()
+    {
+        AudioManager.instance.PlayMusic(GetComponent<AudioSource>(), menuMusicToPlay);
+    }
 
     public void OpenURL(string person)
     {
