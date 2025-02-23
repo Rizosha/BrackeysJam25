@@ -31,6 +31,8 @@ public class Case : MonoBehaviour
     public Image healthBar;
     public static event Action<Transform> OnCaseInactive;
 
+    public string audioName;
+
     private void Start()
     {
         circleCollider2D = GetComponent<CircleCollider2D>();
@@ -63,6 +65,7 @@ public class Case : MonoBehaviour
 
     public IEnumerator Attack()
     {
+        AudioManager.instance.PlaySFX(GetComponent<AudioSource>(), audioName);
         weaponInCase.GetComponent<Animator>().SetTrigger(Animator.StringToHash("Attack"));
 
         yield return new WaitForSeconds(0.667f); //animation time

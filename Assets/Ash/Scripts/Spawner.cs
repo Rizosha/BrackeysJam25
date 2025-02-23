@@ -43,6 +43,7 @@ public class Spawner : MonoBehaviour
     
     private void Start()
     {
+        AudioManager.instance.PlayMusic(GetComponent<AudioSource>(), "Cool Background Music");
         foreach (GameObject obj in extraGameObjects)
         {
             SpriteRenderer objSpriteRenderer = obj.GetComponent<SpriteRenderer>();
@@ -134,6 +135,7 @@ public class Spawner : MonoBehaviour
         scoreText.text = score.score.ToString();
         scoreUi.SetActive(false);
         gameOverUi.SetActive(true);
+        AudioManager.instance.StopMusic(GetComponent<AudioSource>(), "Cool Background Music");
     }
     
     public void Restart()

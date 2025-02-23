@@ -291,6 +291,11 @@ public class NPC_Controller : MonoBehaviour
 
     private IEnumerator Die()
     {
+        string[] names = { "Body Hit", "Body Hit 2", "Body Hit 3" };
+        string randomHit = names[UnityEngine.Random.Range(0, names.Length)];
+
+        AudioManager.instance.PlaySFX(GetComponent<AudioSource>(), randomHit);
+
         if (CaseManager.Instance.bloodEffect != null)
         {
             CaseManager.Instance.CreateBloodSpatter(transform);
