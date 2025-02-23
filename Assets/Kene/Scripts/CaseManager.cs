@@ -38,7 +38,7 @@ public class CaseManager : MonoBehaviour
     {
         InputCaseSwitch(ActiveCase);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && ActiveCase.canAttack)
         {
             if (!hasAttacked)
             {

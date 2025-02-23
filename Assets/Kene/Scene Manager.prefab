@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8f24ecfc69a6348aae8195a424409e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 2621284330554633023}
 --- !u!95 &2621284330554633023
 Animator:
   serializedVersion: 5
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7482667652216324306, guid: e9f19034ee49370498909a3cfea37197, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 3d5d767baa5d23643a3908283540315b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
