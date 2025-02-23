@@ -87,11 +87,11 @@ public class Spawner : MonoBehaviour
                 }
                 else
                 {
-                    currentLevel = 4;
+                    currentLevel = 3;
                 }
 
                 int randomSpawnIndex = UnityEngine.Random.Range(0, spawnPoints.Length);
-                int randomNpcIndex = UnityEngine.Random.Range(0, npcPrefabs.Length); // Randomly select an NPC prefab
+                int randomNpcIndex = UnityEngine.Random.Range(0, npcPrefabs.Length); 
                 Instantiate(npcPrefabs[randomNpcIndex], spawnPoints[randomSpawnIndex].position, Quaternion.identity);
                 npcCount++;
             }
@@ -147,7 +147,7 @@ public class Spawner : MonoBehaviour
  
     public void Quit()
     {
-        
+        Time.timeScale = 1;
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }
