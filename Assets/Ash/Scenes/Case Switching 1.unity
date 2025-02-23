@@ -5481,7 +5481,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 180}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -8578,6 +8578,18 @@ PrefabInstance:
       propertyPath: audioName
       value: Spear Swing
       objectReference: {fileID: 0}
+    - target: {fileID: 1249406355872828989, guid: 430fe843873ef324ea659889530bf44e, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1249406355872828989, guid: 430fe843873ef324ea659889530bf44e, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 1249406355872828989, guid: 430fe843873ef324ea659889530bf44e, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 1477387343967650764, guid: 430fe843873ef324ea659889530bf44e, type: 3}
       propertyPath: audioName
       value: Morning Swords Swing
@@ -8594,6 +8606,18 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 483404317}
+    - target: {fileID: 2442716723845262333, guid: 430fe843873ef324ea659889530bf44e, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2442716723845262333, guid: 430fe843873ef324ea659889530bf44e, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 2442716723845262333, guid: 430fe843873ef324ea659889530bf44e, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 2731590956506142142, guid: 430fe843873ef324ea659889530bf44e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8634,6 +8658,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3445574204392599160, guid: 430fe843873ef324ea659889530bf44e, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3445574204392599160, guid: 430fe843873ef324ea659889530bf44e, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 3445574204392599160, guid: 430fe843873ef324ea659889530bf44e, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 3844403194406779287, guid: 430fe843873ef324ea659889530bf44e, type: 3}
       propertyPath: m_Name
       value: Artifact Weapon Cases
@@ -8650,6 +8686,18 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 483404317}
+    - target: {fileID: 7761445906574153276, guid: 430fe843873ef324ea659889530bf44e, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7761445906574153276, guid: 430fe843873ef324ea659889530bf44e, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 7761445906574153276, guid: 430fe843873ef324ea659889530bf44e, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 9154338163043205881, guid: 430fe843873ef324ea659889530bf44e, type: 3}
       propertyPath: tranistionEffect
       value: 
