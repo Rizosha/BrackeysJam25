@@ -298,8 +298,12 @@ public class NPC_Controller : MonoBehaviour
 
     private IEnumerator Die()
     {
-        if (CaseManager.Instance.bloodEffect != null) 
+        if (CaseManager.Instance.bloodEffect != null)
+        {
             CaseManager.Instance.CreateBloodSpatter(transform);
+            Camera.main.GetComponent<CameraShake>().TriggerShake(.5f, .1f);
+        }
+
         agent.isStopped = true;
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);

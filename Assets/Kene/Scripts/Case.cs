@@ -70,12 +70,17 @@ public class Case : MonoBehaviour
         canAttack = false;
         coolingClock.SetActive(true);
 
+        MoveToWeapon();
+
+        GetComponentInParent<CaseManager>().hasAttacked = false;
+    }
+
+    private void MoveToWeapon()
+    {
         List<Case> openCases = GetComponentInParent<CaseManager>().cases.Where(x => x.canAttack).ToList();
 
         if (openCases.Count > 0)
             StartCoroutine(GetComponentInParent<CaseManager>().InitializeCase(openCases[UnityEngine.Random.Range(0, openCases.Count)]));
-
-        GetComponentInParent<CaseManager>().hasAttacked = false;
     }
 
     public void TakeDamage(int damage)
@@ -100,6 +105,11 @@ public class Case : MonoBehaviour
             {
                 spawner.GameOver();
             }
+
+            if (CaseManager.Instance.ActiveCase == this)
+                MoveToWeapon();
+
+            CaseManager.Instance.cases.Remove(this);
             gameObject.SetActive(false);
 
           

@@ -3613,6 +3613,7 @@ MonoBehaviour:
   - {fileID: 2054962350272980476}
   tranistionEffect: {fileID: 0}
   bloodEffect: {fileID: 5889783189982880014, guid: 2392411f51ff9ff42b557759dba6753c, type: 3}
+  camShake: {fileID: 0}
 --- !u!1 &3638054875318625891
 GameObject:
   m_ObjectHideFlags: 0
@@ -4530,7 +4531,7 @@ MonoBehaviour:
   cooldownTime: 0
   canAttack: 1
   coolingClock: {fileID: 6021002440815290842}
-  coolingCircle: {fileID: 5788635473109860610}
+  coolingCircle: {fileID: 2205333997253572588}
   circleCollider2D: {fileID: 9041367491376617360}
   spotLight: {fileID: 61973302348909500}
   health: 100

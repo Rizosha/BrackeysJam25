@@ -17,7 +17,7 @@ public class CaseManager : MonoBehaviour
         set { _activeCase = value; }
     }
 
-    public Case[] cases;
+    public List<Case> cases;
     public GameObject tranistionEffect;
     public GameObject bloodEffect;
 
@@ -66,7 +66,7 @@ public class CaseManager : MonoBehaviour
 
         tranistionEffect.SetActive(false);
 
-        for (int i = 0; i < cases.Length; i++)
+        for (int i = 0; i < cases.Count; i++)
         {
             if (currentCase == cases[i])
                 continue;
@@ -95,7 +95,7 @@ public class CaseManager : MonoBehaviour
             if (caseSwitch.topCase == null)
                 return;
 
-            if (!caseSwitch.topCase.canAttack)
+            if (!caseSwitch.topCase.canAttack || !caseSwitch.topCase.gameObject.activeSelf)
                 return;
 
             StartCoroutine(InitializeCase(caseSwitch.topCase));
@@ -107,7 +107,7 @@ public class CaseManager : MonoBehaviour
             if (caseSwitch.leftCase == null)
                 return;
 
-            if (!caseSwitch.leftCase.canAttack)
+            if (!caseSwitch.leftCase.canAttack || !caseSwitch.leftCase.gameObject.activeSelf)
                 return;
 
             StartCoroutine(InitializeCase(caseSwitch.leftCase));
@@ -119,7 +119,7 @@ public class CaseManager : MonoBehaviour
             if (caseSwitch.bottomCase == null)
                 return;
 
-            if (!caseSwitch.bottomCase.canAttack)
+            if (!caseSwitch.bottomCase.canAttack || !caseSwitch.bottomCase.gameObject.activeSelf)
                 return;
 
             StartCoroutine(InitializeCase(caseSwitch.bottomCase));
@@ -131,7 +131,7 @@ public class CaseManager : MonoBehaviour
             if (caseSwitch.rightCase == null)
                 return;
 
-            if (!caseSwitch.rightCase.canAttack)
+            if (!caseSwitch.rightCase.canAttack || !caseSwitch.rightCase.gameObject.activeSelf)
                 return;
 
             StartCoroutine(InitializeCase(caseSwitch.rightCase));
