@@ -145,7 +145,7 @@ public class Spawner : MonoBehaviour
  
     public void Quit()
     {
-        //add main menu scene here
-        Application.Quit();
+        
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 }

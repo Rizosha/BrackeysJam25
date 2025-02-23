@@ -147,7 +147,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1753502362745403261}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -304,7 +304,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.56}
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.33
 --- !u!1 &8132813910158334771
 GameObject:
   m_ObjectHideFlags: 0

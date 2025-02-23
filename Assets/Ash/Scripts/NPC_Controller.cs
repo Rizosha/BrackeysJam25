@@ -32,7 +32,7 @@ public class NPC_Controller : MonoBehaviour
         agent.updateUpAxis = false;
 
         spawner = GameObject.FindWithTag("GameController").GetComponent<Spawner>();
-        npcLocations = new List<Transform>(spawner.GetMainLocations()); 
+        npcLocations = new List<Transform>(spawner.GetMainLocations());
 
         grabMarker = gameObject.transform.Find("Grab").gameObject;
 
@@ -53,7 +53,6 @@ public class NPC_Controller : MonoBehaviour
         }
         animator.SetBool("isGrabbing", grabbing);
         animator.SetBool("isDead", isDead);
-       
     }
 
     private IEnumerator WaitAndRetry()
@@ -99,7 +98,7 @@ public class NPC_Controller : MonoBehaviour
         {
             isDead = true;
             StartCoroutine(Die());
-           
+
             spawner.npcCount--;
             GameObject.FindWithTag("GameController").GetComponent<Score>().AddScore(100);
         }
@@ -128,22 +127,18 @@ public class NPC_Controller : MonoBehaviour
         if (angle > -45 && angle <= 45)
         {
             direction = Vector2.right;
-           // spriteRenderer.flipX = false;
         }
         else if (angle > 45 && angle <= 135)
         {
             direction = Vector2.up;
-            //spriteRenderer.flipX = false;
         }
         else if (angle > 135 || angle <= -135)
         {
             direction = Vector2.left;
-           // spriteRenderer.flipX = true;
         }
         else
         {
             direction = Vector2.down;
-          //  spriteRenderer.flipX = false;
         }
 
         animator.SetFloat("Horizontal", direction.x);
@@ -190,25 +185,21 @@ public class NPC_Controller : MonoBehaviour
     private IEnumerator Grabbing()
     {
         grabbing = true;
-       // grabMarker.SetActive(true);
         agent.isStopped = true;
         yield return new WaitForSeconds(.6f);
 
+        grabbing = false;
+
         Case closestCase = FindClosestCase();
-        if (closestCase != null)
+
+        if (closestCase != null && closestCase.gameObject.activeInHierarchy)
         {
             closestCase.TakeDamage(20);
         }
 
-        grabbing = false;
-        if (grabMarker != null)
-        {
-            grabMarker.SetActive(false);
-        }
-
         agent.isStopped = false;
         animator.SetBool("IsWalking", true);
-
+        
         MoveToPoint();
     }
 
@@ -240,10 +231,10 @@ public class NPC_Controller : MonoBehaviour
         {
             currentTarget = closestLocation;
             npcLocations.Remove(closestLocation);
-            Vector3 randomNavMeshLocation = GetRandomNavMeshLocation(currentTarget.position, 6f);
+            Vector3 randomNavMeshLocation = GetRandomNavMeshLocation(currentTarget.position, 3.8f);
             agent.SetDestination(randomNavMeshLocation);
 
-            StartCoroutine(CheckIfReachedRandomLocation(randomNavMeshLocation));
+            StartCoroutine(DelayedCheckIfReachedRandomLocation(randomNavMeshLocation));
         }
         else
         {
@@ -276,8 +267,10 @@ public class NPC_Controller : MonoBehaviour
         }
     }
 
-    private IEnumerator CheckIfReachedRandomLocation(Vector3 randomLocation)
+    private IEnumerator DelayedCheckIfReachedRandomLocation(Vector3 randomLocation)
     {
+        yield return new WaitForSeconds(0.1f); // Small delay before checking
+
         while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
         {
             yield return null;
@@ -325,6 +318,7 @@ public class NPC_Controller : MonoBehaviour
                 grabMarker.SetActive(false);
                 agent.isStopped = false;
             }
+            animator.SetBool("IsWalking", true);
             MoveToPoint();
         }
     }

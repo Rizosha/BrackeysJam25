@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Ash/Scenes/Case Switching 1.unity
+    guid: 7c7ad33c1b86dd746a65fb986cd4cdaa
+  - enabled: 1
+    path: Assets/Main Menu.unity
+    guid: f29cedfdec3fe3548a3b8fcf11f0e598
   m_configObjects: {}
