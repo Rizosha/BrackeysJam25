@@ -147,7 +147,7 @@ public class Spawner : MonoBehaviour
  
     public void Quit()
     {
-        
+        Time.timeScale = 1;
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }
